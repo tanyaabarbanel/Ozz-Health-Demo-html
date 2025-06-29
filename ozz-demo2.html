@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ozz Health - Your Care Journey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .phone-container {
+            width: 375px;
+            height: 667px;
+            background: #2c3e50;
+            border-radius: 25px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .demo-header {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .demo-header h1 {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+
+        .content {
+            padding: 30px 25px;
+            height: calc(100% - 70px);
+            overflow-y: auto;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo h1 {
+            font-size: 32px;
+            font-weight: 300;
+            color: #2c3e50;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .logo p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .welcome-title {
+            color: #5cb3cc;
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .welcome-subtitle {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            color: #2c3e50;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .form-select, .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            background: white;
+            font-size: 14px;
+            color: #495057;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+        }
+
+        .form-select:focus, .form-input:focus {
+            outline: none;
+            border-color: #5cb3cc;
+            box-shadow: 0 0 0 3px rgba(92, 179, 204, 0.1);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 8px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .radio-input {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #dee2e6;
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .radio-input:checked {
+            border-color: #5cb3cc;
+        }
+
+        .radio-input:checked::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 8px;
+            height: 8px;
+            background: #5cb3cc;
+            border-radius: 50%;
+        }
+
+        .radio-label {
+            font-size: 14px;
+            color: #495057;
+            cursor: pointer;
+        }
+
+        .privacy-notice {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 25px 0;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .privacy-icon {
+            color: #5cb3cc;
+        }
+
+        .privacy-text {
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        .continue-btn {
+            width: 100%;
+            background: #5cb3cc;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .continue-btn:hover {
+            background: #4a9bb8;
+            transform: translateY(-1px);
+        }
+
+        .continue-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .help-text {
+            text-align: center;
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        .ready-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+            padding: 10px;
+            background: #e8f5e8;
+            border-radius: 8px;
+            color: #2d5a2d;
+            font-size: 12px;
+        }
+
+        /* Loading state */
+        .loading {
+            position: relative;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #5cb3cc;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: translateY(-50%) rotate(0deg); }
+            100% { transform: translateY(-50%) rotate(360deg); }
+        }
+
+        /* Results styling */
+        .results-container {
+            display: none;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .results-container.show {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .results-title {
+            color: #2c3e50;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .results-subtitle {
+            color: #7f8c8d;
+            font-size: 12px;
+        }
+
+        .profile-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .profile-tag {
+            background: #5cb3cc;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .personalized-content {
+            background: #f8f9fa;
+            border-left: 4px solid #5cb3cc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .personalized-content h3 {
+            color: #2c3e50;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .personalized-text {
+            color: #495057;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 425px) {
+            .phone-container {
+                width: 100%;
+                height: 100vh;
+                border-radius: 0;
+                padding: 0;
+            }
+
+            .phone-screen {
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="phone-screen">
+            <div class="demo-header">
+                <h1>▷ Interactive Demo</h1>
+            </div>
+            
+            <div class="content">
+                <div id="form-section">
+                    <div class="logo">
+                        <h1>OZZ</h1>
+                        <p>health</p>
+                    </div>
+
+                    <div class="welcome-section">
+                        <h2 class="welcome-title">Welcome to Your Care Journey</h2>
+                        <p class="welcome-subtitle">Share some info for the best care.</p>
+                    </div>
+
+                    <form id="care-form">
+                        <div class="form-group">
+                            <label class="form-label">Gender</label>
+                            <select class="form-select" name="gender" required>
+                                <option value="">Select gender</option>
+                                <option value="Female">Female</option>
+                                <option value="Male">Male</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Age Range</label>
+                            <select class="form-select" name="age_range" required>
+                                <option value="">Select age range</option>
+                                <option value="18-30">18-30</option>
+                                <option value="31-50">31-50</option>
+                                <option value="51-70">51-70</option>
+                                <option value="71+">71+</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Medical Education?</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" class="radio-input" name="medical_education" value="true" required>
+                                    <span class="radio-label">Yes</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" class="radio-input" name="medical_education" value="false" required>
+                                    <span class="radio-label">No</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Race/Ethnicity <span style="color: #6c757d;">(Optional)</span></label>
+                            <select class="form-select" name="race_ethnicity">
+                                <option value="">Select (optional)</option>
+                                <option value="White">White</option>
+                                <option value="Black or African American">Black or African American</option>
+                                <option value="Hispanic or Latino">Hispanic or Latino</option>
+                                <option value="Asian">Asian</option>
+                                <option value="Native American">Native American</option>
+                                <option value="Pacific Islander">Pacific Islander</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="privacy-notice">
+                            <span class="privacy-icon">🔒</span>
+                            <span class="privacy-text">Your information is protected.</span>
+                        </div>
+
+                        <button type="submit" class="continue-btn" id="continue-btn">
+                            Continue →
+                        </button>
+
+                        <p class="help-text">Need assistance? Ask staff for help.</p>
+                    </form>
+
+                    <div class="ready-indicator">
+                        <span>ℹ️</span>
+                        <span>Ready!</span>
+                    </div>
+                </div>
+
+                <div id="results-section" class="results-container">
+                    <div class="results-header">
+                        <h2 class="results-title">🏥 Your Personalized Care Guide</h2>
+                        <p class="results-subtitle">Tailored specifically for you</p>
+                    </div>
+
+                    <div id="profile-display" class="profile-tags">
+                        <!-- Profile tags will be inserted here -->
+                    </div>
+
+                    <div class="personalized-content">
+                        <h3>Your Care Instructions</h3>
+                        <div id="personalized-text" class="personalized-text">
+                            <!-- Personalized content will be inserted here -->
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn-secondary" onclick="tryAgain()">
+                            🔄 Try Again
+                        </button>
+                        <button class="btn-primary" onclick="saveInstructions()">
+                            📋 Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // AI Personalization System
+        class OzzPersonalization {
+            constructor() {
+                this.apiUrl = 'http://localhost:5000/api/personalize';
+                this.genericInstructions = `
+Hello, I'm Dorothy, your care navigator. I'm here to help you safely get out of bed for the first time after your hip fracture surgery.
+
+Getting Out of Bed:
+1. Make sure you're feeling stable - no dizziness or nausea
+2. Wait for staff assistance - don't try this alone
+3. Position yourself in the upper third of your bed
+4. Slowly raise the head of the bed
+5. Carefully swing your legs to the side of the bed
+6. Sit on the edge for a moment before standing
+7. Stand slowly with your helper's support
+
+Take your time with each step. Your recovery is progressing well, and following these guidelines will help keep you safe.
+                `.trim();
+            }
+
+            async personalizeContent(profileData) {
+                // Simulate AI personalization based on profile
+                const persona = this.createPersona(profileData);
+                const personalizedContent = this.applyPersonalization(persona, this.genericInstructions);
+                
+                return {
+                    personalized_content: personalizedContent,
+                    patient_profile: profileData,
+                    timestamp: new Date().toISOString()
+                };
+            }
+
+            createPersona(profile) {
+                let persona = {
+                    age_group: profile.age_range,
+                    gender: profile.gender.toLowerCase(),
+                    medical_background: profile.medical_education === 'true',
+                    ethnicity: profile.race_ethnicity
+                };
+
+                // Determine communication style
+                if (profile.age_range === '71+') {
+                    persona.tone = 'respectful, patient, family-oriented';
+                    persona.concerns = 'support system, family involvement, fall prevention';
+                } else if (profile.age_range === '18-30') {
+                    persona.tone = 'encouraging, active, future-focused';
+                    persona.concerns = 'returning to activities, work, social life';
+                } else if (profile.age_range === '31-50') {
+                    persona.tone = 'practical, efficient, balanced';
+                    persona.concerns = 'family responsibilities, work return, time management';
+                } else {
+                    persona.tone = 'experienced, thoughtful, health-conscious';
+                    persona.concerns = 'long-term health, prevention, gradual recovery';
+                }
+
+                if (persona.medical_background) {
+                    persona.complexity = 'detailed, clinical terms acceptable';
+                } else {
+                    persona.complexity = 'simplified, layman terms, more explanation needed';
+                }
+
+                return persona;
+            }
+
+            applyPersonalization(persona, content) {
+                let personalized = content;
+
+                // Age-specific modifications
+                if (persona.age_group === '71+') {
+                    personalized = personalized.replace(
+                        "Hello, I'm Dorothy, your care navigator.",
+                        "Hello, I'm Dorothy, your care navigator. I know this might feel overwhelming, but you have so much experience to draw on."
+                    );
+                    
+                    if (persona.gender === 'female') {
+                        personalized = personalized.replace(
+                            "Your recovery is progressing well, and following these guidelines will help keep you safe.",
+                            "Your recovery is progressing well. Don't hesitate to ask your family for help - accepting support is part of healing well."
+                        );
+                    }
+                } else if (persona.age_group === '18-30') {
+                    personalized = personalized.replace(
+                        "Hello, I'm Dorothy, your care navigator.",
+                        "Hi! I'm Dorothy, your care navigator. I know this isn't how you planned to spend your time."
+                    );
+                    
+                    personalized = personalized.replace(
+                        "Your recovery is progressing well, and following these guidelines will help keep you safe.",
+                        "Your recovery is progressing well. I know you're eager to get back to your activities, but taking it slow now will get you back stronger."
+                    );
+                }
+
+                // Medical background modifications
+                if (persona.medical_background) {
+                    personalized = personalized.replace(
+                        "Wait for staff assistance - don't try this alone",
+                        "Wait for staff assistance - as you know from your medical training, proper support prevents complications"
+                    );
+                } else {
+                    personalized = personalized.replace(
+                        "Make sure you're feeling stable - no dizziness or nausea",
+                        "Make sure you're feeling stable - no dizziness, weakness, or nausea"
+                    );
+                }
+
+                // Gender-specific touches
+                if (persona.gender === 'female') {
+                    personalized = personalized.replace(
+                        "You're doing great",
+                        "You're handling this with such strength"
+                    );
+                }
+
+                return personalized;
+            }
+        }
+
+        // Initialize the personalization system
+        const personalizer = new OzzPersonalization();
+
+        // Form handling
+        document.getElementById('care-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const profileData = {
+                gender: formData.get('gender'),
+                age_range: formData.get('age_range'),
+                medical_education: formData.get('medical_education'),
+                race_ethnicity: formData.get('race_ethnicity') || null
+            };
+
+            // Validate required fields
+            if (!profileData.gender || !profileData.age_range || !profileData.medical_education) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            // Show loading state
+            const continueBtn = document.getElementById('continue-btn');
+            continueBtn.classList.add('loading');
+            continueBtn.disabled = true;
+            continueBtn.textContent = 'Personalizing...';
+
+            try {
+                // Generate personalized content
+                const result = await personalizer.personalizeContent(profileData);
+                
+                // Display results
+                displayResults(result);
+                
+            } catch (error) {
+                console.error('Personalization error:', error);
+                alert('Something went wrong. Please try again.');
+            } finally {
+                // Reset button
+                continueBtn.classList.remove('loading');
+                continueBtn.disabled = false;
+                continueBtn.textContent = 'Continue →';
+            }
+        });
+
+        function displayResults(data) {
+            // Hide form section
+            document.getElementById('form-section').style.display = 'none';
+            
+            // Show results section
+            const resultsSection = document.getElementById('results-section');
+            resultsSection.classList.add('show');
+            
+            // Display profile tags
+            const profileDisplay = document.getElementById('profile-display');
+            const profile = data.patient_profile;
+            
+            let tags = [
+                profile.gender,
+                profile.age_range,
+                profile.medical_education === 'true' ? 'Medical Background' : 'No Medical Background'
+            ];
+            
+            if (profile.race_ethnicity) {
+                tags.push(profile.race_ethnicity);
+            }
+            
+            profileDisplay.innerHTML = tags.map(tag => 
+                `<span class="profile-tag">${tag}</span>`
+            ).join('');
+            
+            // Display personalized content
+            const textDisplay = document.getElementById('personalized-text');
+            textDisplay.innerHTML = data.personalized_content.replace(/\n\n/g, '<br><br>');
+        }
+
+        function tryAgain() {
+            // Reset form
+            document.getElementById('care-form').reset();
+            
+            // Show form section
+            document.getElementById('form-section').style.display = 'block';
+            
+            // Hide results section
+            document.getElementById('results-section').classList.remove('show');
+        }
+
+        function saveInstructions() {
+            const content = document.getElementById('personalized-text').textContent;
+            
+            // Create downloadable file
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'ozz-personalized-care-instructions.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Demo scenarios for quick testing
+        function loadRuby() {
+            document.querySelector('[name="gender"]').value = 'Female';
+            document.querySelector('[name="age_range"]').value = '71+';
+            document.querySelector('[name="medical_education"][value="true"]').checked = true;
+        }
+
+        function loadEmma() {
+            document.querySelector('[name="gender"]').value = 'Female';
+            document.querySelector('[name="age_range"]').value = '31-50';
+            document.querySelector('[name="medical_education"][value="false"]').checked = true;
+        }
+
+        // Add demo buttons (for testing)
+        window.addEventListener('load', function() {
+            const helpText = document.querySelector('.help-text');
+            helpText.innerHTML = `
+                Need assistance? Ask staff for help.<br>
+                <small style="margin-top: 10px; display: block;">
+                    Quick test: 
+                    <a href="#" onclick="loadRuby(); return false;" style="color: #5cb3cc;">Ruby</a> | 
+                    <a href="#" onclick="loadEmma(); return false;" style="color: #5cb3cc;">Emma</a>
+                </small>
+            `;
+        });
+    </script>
+</body>
+</html>
