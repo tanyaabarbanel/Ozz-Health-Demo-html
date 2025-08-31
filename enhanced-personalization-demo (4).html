@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ozz Health - Your Care Journey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .phone-container {
+            width: 375px;
+            height: 667px;
+            background: #2c3e50;
+            border-radius: 25px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .demo-header {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .demo-header h1 {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+
+        .content {
+            padding: 30px 25px;
+            height: calc(100% - 70px);
+            overflow-y: auto;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo h1 {
+            font-size: 32px;
+            font-weight: 300;
+            color: #2c3e50;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .logo p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .welcome-title {
+            color: #5cb3cc;
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .welcome-subtitle {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            color: #2c3e50;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .form-select, .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            background: white;
+            font-size: 14px;
+            color: #495057;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+        }
+
+        .form-select:focus, .form-input:focus {
+            outline: none;
+            border-color: #5cb3cc;
+            box-shadow: 0 0 0 3px rgba(92, 179, 204, 0.1);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 8px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .radio-input {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #dee2e6;
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .radio-input:checked {
+            border-color: #5cb3cc;
+        }
+
+        .radio-input:checked::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 8px;
+            height: 8px;
+            background: #5cb3cc;
+            border-radius: 50%;
+        }
+
+        .radio-label {
+            font-size: 14px;
+            color: #495057;
+            cursor: pointer;
+        }
+
+        .privacy-notice {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 25px 0;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .privacy-icon {
+            color: #5cb3cc;
+        }
+
+        .privacy-text {
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        .continue-btn {
+            width: 100%;
+            background: #5cb3cc;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .continue-btn:hover {
+            background: #4a9bb8;
+            transform: translateY(-1px);
+        }
+
+        .continue-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .help-text {
+            text-align: center;
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        .ready-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+            padding: 10px;
+            background: #e8f5e8;
+            border-radius: 8px;
+            color: #2d5a2d;
+            font-size: 12px;
+        }
+
+        /* Loading state */
+        .loading {
+            position: relative;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #5cb3cc;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: translateY(-50%) rotate(0deg); }
+            100% { transform: translateY(-50%) rotate(360deg); }
+        }
+
+        /* Results styling */
+        .results-container {
+            display: none;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .results-container.show {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .results-title {
+            color: #2c3e50;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .results-subtitle {
+            color: #7f8c8d;
+            font-size: 12px;
+        }
+
+        .profile-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .profile-tag {
+            background: #5cb3cc;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .personalized-content {
+            background: #f8f9fa;
+            border-left: 4px solid #5cb3cc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .personalized-content h3 {
+            color: #2c3e50;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .personalized-text {
+            color: #495057;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 425px) {
+            .phone-container {
+                width: 100%;
+                height: 100vh;
+                border-radius: 0;
+                padding: 0;
+            }
+
+            .phone-screen {
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="phone-screen">
+            <div class="demo-header">
+                <h1>▷ Enhanced Personalization Demo</h1>
+            </div>
+            
+            <div class="content">
+                <div id="form-section">
+                    <div class="logo">
+                        <h1>OZZ</h1>
+                        <p>health</p>
+                    </div>
+
+                    <div class="welcome-section">
+                        <h2 class="welcome-title">Welcome to Your Care Journey</h2>
+                        <p class="welcome-subtitle">Share some info for the best care.</p>
+                    </div>
+
+                    <form id="care-form">
+                        <div class="form-group">
+                            <label class="form-label">Gender</label>
+                            <select class="form-select" name="gender" required>
+                                <option value="">Select gender</option>
+                                <option value="Female">Female</option>
+                                <option value="Male">Male</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Age Range</label>
+                            <select class="form-select" name="age_range" required>
+                                <option value="">Select age range</option>
+                                <option value="18-30">18-30</option>
+                                <option value="31-50">31-50</option>
+                                <option value="51-70">51-70</option>
+                                <option value="71+">71+</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Medical Education?</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" class="radio-input" name="medical_education" value="true" required>
+                                    <span class="radio-label">Yes</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" class="radio-input" name="medical_education" value="false" required>
+                                    <span class="radio-label">No</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Race/Ethnicity <span style="color: #6c757d;">(Optional)</span></label>
+                            <select class="form-select" name="race_ethnicity">
+                                <option value="">Select (optional)</option>
+                                <option value="White">White</option>
+                                <option value="Black or African American">Black or African American</option>
+                                <option value="Hispanic or Latino">Hispanic or Latino</option>
+                                <option value="Asian">Asian</option>
+                                <option value="Native American">Native American</option>
+                                <option value="Pacific Islander">Pacific Islander</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="privacy-notice">
+                            <span class="privacy-icon">🔒</span>
+                            <span class="privacy-text">Your information is protected.</span>
+                        </div>
+
+                        <button type="submit" class="continue-btn" id="continue-btn">
+                            Continue →
+                        </button>
+
+                        <p class="help-text">Need assistance? Ask staff for help.</p>
+                    </form>
+
+                    <div class="ready-indicator">
+                        <span>ℹ️</span>
+                        <span>Ready!</span>
+                    </div>
+                </div>
+
+                <div id="results-section" class="results-container">
+                    <div class="results-header">
+                        <h2 class="results-title">🏥 Your Personalized Care Guide</h2>
+                        <p class="results-subtitle">Tailored specifically for you</p>
+                    </div>
+
+                    <div id="profile-display" class="profile-tags">
+                        <!-- Profile tags will be inserted here -->
+                    </div>
+
+                    <div class="personalized-content">
+                        <h3>Your Care Instructions</h3>
+                        <div id="personalized-text" class="personalized-text">
+                            <!-- Personalized content will be inserted here -->
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn-secondary" onclick="tryAgain()">
+                            🔄 Try Again
+                        </button>
+                        <button class="btn-primary" onclick="saveInstructions()">
+                            📋 Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced AI Personalization System
+        class EnhancedOzzPersonalization {
+            constructor() {
+                this.personalityProfiles = this.initializePersonalityProfiles();
+                this.contentTemplates = this.initializeContentTemplates();
+            }
+
+            initializePersonalityProfiles() {
+                return {
+                    // Young Adults (18-30)
+                    "young_no_med": {
+                        greeting_style: "casual_energetic",
+                        concern_focus: "lifestyle_impact",
+                        instruction_style: "direct_motivational",
+                        language_complexity: "simple",
+                        motivation_approach: "goal_oriented"
+                    },
+                    "young_med": {
+                        greeting_style: "professional_peer",
+                        concern_focus: "technical_precision", 
+                        instruction_style: "collaborative_detailed",
+                        language_complexity: "technical",
+                        motivation_approach: "evidence_based"
+                    },
+
+                    // Middle Age (31-50)
+                    "middle_no_med": {
+                        greeting_style: "warm_practical",
+                        concern_focus: "family_work_balance",
+                        instruction_style: "step_by_step_practical",
+                        language_complexity: "moderate",
+                        motivation_approach: "responsibility_focused"
+                    },
+                    "middle_med": {
+                        greeting_style: "respectful_knowledgeable",
+                        concern_focus: "clinical_outcomes",
+                        instruction_style: "detailed_collaborative",
+                        language_complexity: "clinical",
+                        motivation_approach: "outcome_focused"
+                    },
+
+                    // Older Adults (51-70)
+                    "older_no_med": {
+                        greeting_style: "respectful_reassuring",
+                        concern_focus: "independence_safety",
+                        instruction_style: "patient_detailed",
+                        language_complexity: "clear_simple",
+                        motivation_approach: "confidence_building"
+                    },
+                    "older_med": {
+                        greeting_style: "colleague_respectful",
+                        concern_focus: "professional_experience",
+                        instruction_style: "experienced_collaborative",
+                        language_complexity: "professional",
+                        motivation_approach: "wisdom_based"
+                    },
+
+                    // Elderly (71+)
+                    "elderly_no_med": {
+                        greeting_style: "gentle_supportive",
+                        concern_focus: "comfort_family",
+                        instruction_style: "slow_reassuring",
+                        language_complexity: "very_simple",
+                        motivation_approach: "comfort_focused"
+                    },
+                    "elderly_med": {
+                        greeting_style: "honored_experienced",
+                        concern_focus: "legacy_wisdom",
+                        instruction_style: "respected_collaborative",
+                        language_complexity: "respectful_technical",
+                        motivation_approach: "dignity_preserving"
+                    }
+                };
+            }
+
+            initializeContentTemplates() {
+                return {
+                    greetings: {
+                        casual_energetic: "Hey there! I'm Dorothy, your recovery companion. I know this hip surgery wasn't in your plans, but we're going to get you back to your active life!",
+                        professional_peer: "Hello! I'm Dorothy, your care navigator. As someone with medical training, you understand the importance of proper post-op protocols. Let's work together on your recovery.",
+                        warm_practical: "Hi, I'm Dorothy, here to guide you through recovery. I know you have a lot on your plate, so let's make this as straightforward as possible.",
+                        respectful_knowledgeable: "Good day, I'm Dorothy, your care coordinator. Given your medical background, I'll provide detailed guidance while respecting your professional understanding.",
+                        respectful_reassuring: "Hello, I'm Dorothy, your care navigator. I want you to know that what you're feeling right now is completely normal, and I'm here to support you through each step.",
+                        colleague_respectful: "Hello, I'm Dorothy. It's an honor to work with someone with your medical experience. Together, we'll ensure your recovery follows best practices.",
+                        gentle_supportive: "Hello, I'm Dorothy, and I'm here to help you through this recovery. You've been so brave, and I want to make sure you feel supported every step of the way.",
+                        honored_experienced: "Hello, I'm Dorothy. It's a privilege to assist someone with your years of medical expertise. Your professional knowledge will be an asset in your recovery."
+                    },
+
+                    instructions: {
+                        // Young Adult Instructions
+                        direct_motivational: {
+                            readiness: "First, do a quick body check - any dizziness or nausea? If you're feeling good, let's get moving.",
+                            assistance: "Have someone nearby to help you - a friend, family member, or your partner can give you that extra support.",
+                            positioning: "Sit up in bed so your upper body is upright.",
+                            movement: "Slowly swing your legs over the side and sit on the edge for a moment.",
+                            support: "Stand up with your helper's support. You're one step closer to getting back to everything you love!"
+                        },
+                        collaborative_detailed: {
+                            readiness: "Assess for any orthostatic symptoms or dizziness before proceeding.",
+                            assistance: "Ensure appropriate assistance is available - you understand the importance of proper support protocols.",
+                            positioning: "Position yourself upright with optimal alignment in the bed.",
+                            movement: "Execute a controlled transfer to seated position at bedside.",
+                            support: "Perform assisted standing while monitoring your physiological responses."
+                        },
+                        
+                        // Middle Age Instructions  
+                        step_by_step_practical: {
+                            readiness: "Check how you're feeling - any dizziness or nausea? We need to make sure you're ready.",
+                            assistance: "Ask your family member or partner to help you. This is about being smart and safe.",
+                            positioning: "Sit up in bed with your upper body upright.",
+                            movement: "Carefully swing your legs over the side and sit on the edge before standing.",
+                            support: "Stand up slowly with help. Every careful step gets you back to your routine sooner."
+                        },
+                        detailed_collaborative: {
+                            readiness: "Assess for any orthostatic symptoms, dizziness, or nausea before beginning.",
+                            assistance: "Coordinate with your support person - your clinical knowledge confirms proper assistance protocols.",
+                            positioning: "Establish optimal upright positioning in the bed.",
+                            movement: "Execute controlled leg transfer to bedside and maintain seated position briefly.",
+                            support: "Perform assisted standing while maintaining clinical awareness of your responses."
+                        },
+
+                        // Older Adult Instructions
+                        patient_detailed: {
+                            readiness: "Let's check how you're feeling first - any dizziness or nausea? Take your time.",
+                            assistance: "Have a family member or loved one nearby to help and support you.",
+                            positioning: "Gently sit up in the bed - there's no rush at all.",
+                            movement: "Slowly bring your legs over to the side and rest sitting on the edge.",
+                            support: "When you're ready, stand up slowly with your helper. Steady and safe is the goal."
+                        },
+                        experienced_collaborative: {
+                            readiness: "Please assess for any orthostatic symptoms or dizziness before proceeding.",
+                            assistance: "Have appropriate assistance available - your professional experience validates proper protocols.",
+                            positioning: "Position yourself optimally in an upright position.",
+                            movement: "Execute controlled transfer to seated position at bedside.",
+                            support: "Proceed with assisted standing, using your professional judgment throughout."
+                        },
+
+                        // Elderly Instructions
+                        slow_reassuring: {
+                            readiness: "Let's take a moment to see how you're feeling first. Any dizziness or upset stomach?",
+                            assistance: "Have one of your family members right there with you to help.",
+                            positioning: "Very gently sit up in bed - we'll take all the time you need.",
+                            movement: "When you're ready, slowly move your legs to the side and rest sitting up.",
+                            support: "Stand up very slowly with your family member helping you. You're doing wonderfully."
+                        },
+                        respected_collaborative: {
+                            readiness: "Please assess for any orthostatic symptoms or weakness before we proceed.",
+                            assistance: "Have your family nearby for support - your wisdom knows the value of assistance.",
+                            positioning: "Establish optimal positioning in an upright stance.",
+                            movement: "Execute systematic positioning to seated at bedside.",
+                            support: "Proceed with assisted standing, applying the clinical judgment that has served you well."
+                        }
+                    },
+
+                    closings: {
+                        goal_oriented: "You've got this! Each step you take now is getting you closer to your full recovery and back to all your activities.",
+                        evidence_based: "Following these evidence-based protocols will optimize your recovery trajectory and minimize complications.",
+                        responsibility_focused: "Taking care of yourself properly now means you'll be back to taking care of everyone else sooner.",
+                        outcome_focused: "Your adherence to these clinical guidelines will directly impact your functional outcomes and recovery timeline.",
+                        confidence_building: "You're doing everything right. Trust the process, trust your body, and trust that you'll get through this successfully.",
+                        wisdom_based: "Your professional experience has taught you the value of patience in healing. Trust in that wisdom as you recover.",
+                        comfort_focused: "Rest assured that you're in excellent hands, and take comfort knowing that each day will bring you closer to feeling like yourself again.",
+                        dignity_preserving: "Your lifetime of helping others heal has prepared you well for your own recovery. You deserve the same excellent care you've always provided."
+                    }
+                };
+            }
+
+            determineProfile(profileData) {
+                const ageGroup = this.mapAgeGroup(profileData.age_range);
+                const hasMedical = profileData.medical_education === 'true';
+                const profileKey = `${ageGroup}_${hasMedical ? 'med' : 'no_med'}`;
+                return this.personalityProfiles[profileKey];
+            }
+
+            mapAgeGroup(ageRange) {
+                const ageMap = {
+                    "18-30": "young",
+                    "31-50": "middle", 
+                    "51-70": "older",
+                    "71+": "elderly"
+                };
+                return ageMap[ageRange];
+            }
+
+            async personalizeContent(profileData) {
+                const profile = this.determineProfile(profileData);
+                
+                // Generate greeting
+                const greeting = this.contentTemplates.greetings[profile.greeting_style];
+                
+                // Generate instructions based on profile
+                const instructionSet = this.contentTemplates.instructions[profile.instruction_style];
+                
+                // Generate closing
+                const closing = this.contentTemplates.closings[profile.motivation_approach];
+
+                // Build complete personalized response based on actual parameters
+                const personalizedContent = `${greeting}
+
+Getting Out of Bed:
+1. ${instructionSet.readiness}
+2. ${instructionSet.assistance}
+3. ${instructionSet.positioning}
+4. ${instructionSet.movement}
+5. ${instructionSet.support}
+
+${closing}`;
+
+                return {
+                    personalized_content: personalizedContent,
+                    patient_profile: profileData,
+                    personality_profile: profile,
+                    timestamp: new Date().toISOString()
+                };
+            }
+        }
+
+        // Initialize the enhanced personalization system
+        const personalizer = new EnhancedOzzPersonalization();
+
+        // Form handling
+        document.getElementById('care-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const profileData = {
+                gender: formData.get('gender'),
+                age_range: formData.get('age_range'),
+                medical_education: formData.get('medical_education'),
+                race_ethnicity: formData.get('race_ethnicity') || null
+            };
+
+            // Validate required fields
+            if (!profileData.gender || !profileData.age_range || !profileData.medical_education) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            // Show loading state
+            const continueBtn = document.getElementById('continue-btn');
+            continueBtn.classList.add('loading');
+            continueBtn.disabled = true;
+            continueBtn.textContent = 'Personalizing...';
+
+            try {
+                // Generate personalized content with enhanced logic
+                const result = await personalizer.personalizeContent(profileData);
+                
+                // Display results
+                displayResults(result);
+                
+            } catch (error) {
+                console.error('Personalization error:', error);
+                alert('Something went wrong. Please try again.');
+            } finally {
+                // Reset button
+                continueBtn.classList.remove('loading');
+                continueBtn.disabled = false;
+                continueBtn.textContent = 'Continue →';
+            }
+        });
+
+        function displayResults(data) {
+            // Hide form section
+            document.getElementById('form-section').style.display = 'none';
+            
+            // Show results section
+            const resultsSection = document.getElementById('results-section');
+            resultsSection.classList.add('show');
+            
+            // Display profile tags
+            const profileDisplay = document.getElementById('profile-display');
+            const profile = data.patient_profile;
+            
+            let tags = [
+                profile.gender,
+                profile.age_range,
+                profile.medical_education === 'true' ? 'Medical Background' : 'No Medical Background'
+            ];
+            
+            if (profile.race_ethnicity) {
+                tags.push(profile.race_ethnicity);
+            }
+            
+            profileDisplay.innerHTML = tags.map(tag => 
+                `<span class="profile-tag">${tag}</span>`
+            ).join('');
+            
+            // Display personalized content
+            const textDisplay = document.getElementById('personalized-text');
+            textDisplay.innerHTML = data.personalized_content.replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
+        }
+
+        function tryAgain() {
+            // Reset form
+            document.getElementById('care-form').reset();
+            
+            // Show form section
+            document.getElementById('form-section').style.display = 'block';
+            
+            // Hide results section
+            document.getElementById('results-section').classList.remove('show');
+        }
+
+        function saveInstructions() {
+            const content = document.getElementById('personalized-text').textContent;
+            
+            // Create downloadable file
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'ozz-personalized-care-instructions.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Demo scenarios for quick testing
+        function loadRuby() {
+            document.querySelector('[name="gender"]').value = 'Female';
+            document.querySelector('[name="age_range"]').value = '71+';
+            document.querySelector('[name="medical_education"][value="true"]').checked = true;
+        }
+
+        function loadEmma() {
+            document.querySelector('[name="gender"]').value = 'Female';
+            document.querySelector('[name="age_range"]').value = '31-50';
+            document.querySelector('[name="medical_education"][value="false"]').checked = true;
+        }
+
+        function loadYoungAthlete() {
+            document.querySelector('[name="gender"]').value = 'Male';
+            document.querySelector('[name="age_range"]').value = '18-30';
+            document.querySelector('[name="medical_education"][value="false"]').checked = true;
+        }
+
+        function loadYoungDoctor() {
+            document.querySelector('[name="gender"]').value = 'Female';
+            document.querySelector('[name="age_range"]').value = '18-30';
+            document.querySelector('[name="medical_education"][value="true"]').checked = true;
+        }
+
+        // Add demo buttons (for testing)
+        window.addEventListener('load', function() {
+            const helpText = document.querySelector('.help-text');
+            helpText.innerHTML = `
+                Need assistance? Ask staff for help.<br>
+                <small style="margin-top: 10px; display: block;">
+                    Quick test: 
+                    <a href="#" onclick="loadRuby(); return false;" style="color: #5cb3cc;">Ruby (Elderly Nurse)</a> | 
+                    <a href="#" onclick="loadEmma(); return false;" style="color: #5cb3cc;">Emma (Middle-age Lawyer)</a><br>
+                    <a href="#" onclick="loadYoungAthlete(); return false;" style="color: #5cb3cc;">Young Athlete</a> | 
+                    <a href="#" onclick="loadYoungDoctor(); return false;" style="color: #5cb3cc;">Young Doctor</a>
+                </small>
+            `;
+        });
+    </script>
+</body>
+</html>
