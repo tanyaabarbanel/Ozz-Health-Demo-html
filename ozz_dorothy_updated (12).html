@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ozz Health - Dorothy with D-ID</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .phone-container {
+            width: 375px;
+            max-height: 667px;
+            background: #2c3e50;
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .phone-screen {
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .demo-header {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .demo-header h1 {
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .content {
+            padding: 30px 25px;
+            max-height: 580px;
+            overflow-y: auto;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo h1 {
+            font-size: 32px;
+            font-weight: 300;
+            color: #2c3e50;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .logo p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .welcome-title {
+            color: #5cb3cc;
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .welcome-subtitle {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            color: #2c3e50;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            background: white;
+            font-size: 14px;
+            color: #495057;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: #5cb3cc;
+            box-shadow: 0 0 0 3px rgba(92, 179, 204, 0.1);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 8px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .continue-btn {
+            width: 100%;
+            background: #5cb3cc;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px 0 15px 0;
+        }
+
+        .continue-btn:hover {
+            background: #4a9bb8;
+            transform: translateY(-1px);
+        }
+
+        .continue-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .privacy-notice {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 15px 0;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .privacy-text {
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        .help-text {
+            text-align: center;
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        /* Results Section */
+        .results-container {
+            display: none;
+        }
+
+        .results-container.show {
+            display: block;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .results-title {
+            color: #2c3e50;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .results-subtitle {
+            color: #7f8c8d;
+            font-size: 12px;
+        }
+
+        /* Dorothy Video Player */
+        .dorothy-video-container {
+            text-align: center;
+            margin: 20px 0;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .video-player {
+            width: 100%;
+            max-width: 300px;
+            height: 200px;
+            border-radius: 8px;
+            background: #000;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-player video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+        }
+
+        .avatar-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            object-fit: cover;
+            border: 3px solid #5cb3cc;
+        }
+
+        .loading-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            color: #5cb3cc;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e3f2fd;
+            border-top: 4px solid #5cb3cc;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .loading-subtext {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+
+        .dorothy-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #2c3e50;
+            margin-top: 10px;
+        }
+
+        .profile-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .profile-tag {
+            background: #5cb3cc;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .video-controls {
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .video-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+        }
+
+        .video-btn:hover {
+            background: #218838;
+            transform: translateY(-1px);
+        }
+
+        .video-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .personalized-content {
+            background: #f8f9fa;
+            border-left: 4px solid #5cb3cc;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .personalized-content h3 {
+            color: #2c3e50;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .personalized-text {
+            color: #495057;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-secondary, .btn-primary {
+            flex: 1;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-primary {
+            background: #28a745;
+            color: white;
+        }
+
+        .did-info {
+            background: #e8f5e8;
+            border: 1px solid #28a745;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 11px;
+            color: #155724;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="phone-screen">
+            <div class="demo-header">
+                <h1>▷ D-ID Dorothy Demo</h1>
+            </div>
+            
+            <div class="content">
+                <div id="form-section">
+                    <div class="logo">
+                        <h1>OZZ</h1>
+                        <p>health</p>
+                    </div>
+
+                    <div class="welcome-section">
+                        <h2 class="welcome-title">Meet Dorothy</h2>
+                        <p class="welcome-subtitle">AI avatar that speaks to you personally</p>
+                    </div>
+
+                    <form id="care-form">
+                        <div class="form-group">
+                            <label class="form-label">Gender</label>
+                            <select class="form-select" name="gender" required>
+                                <option value="">Select gender</option>
+                                <option value="Female">Female</option>
+                                <option value="Male">Male</option>
+                                <option value="Non-binary">Non-binary</option>
+                                <option value="Other">Other</option>
+                                <option value="Prefer not to say">Prefer not to say</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Age Range</label>
+                            <select class="form-select" name="age_range" required>
+                                <option value="">Select age range</option>
+                                <option value="18-30">18-30</option>
+                                <option value="31-50">31-50</option>
+                                <option value="51-70">51-70</option>
+                                <option value="71+">71+</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Medical Education?</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="medical_education" value="true" required>
+                                    <span>Yes</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="medical_education" value="false" required>
+                                    <span>No</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Race/Ethnicity (Optional)</label>
+                            <select class="form-select" name="ethnicity">
+                                <option value="">Prefer not to say</option>
+                                <option value="White">White/Caucasian</option>
+                                <option value="Hispanic">Hispanic/Latino</option>
+                                <option value="Black">Black/African American</option>
+                                <option value="Asian">Asian</option>
+                                <option value="Pacific Islander">Pacific Islander</option>
+                                <option value="Native American">Native American/Alaska Native</option>
+                                <option value="Multiracial">Multiracial</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="privacy-notice">
+                            <span>🔒</span>
+                            <span class="privacy-text">Your information is protected</span>
+                        </div>
+
+                        <button type="submit" class="continue-btn" id="continue-btn">
+                            Meet Dorothy →
+                        </button>
+
+                        <p class="help-text">
+                            Quick test: 
+                            <a href="#" onclick="loadProfile('Female', '18-30', 'false'); return false;" style="color: #5cb3cc;">Young</a> |
+                            <a href="#" onclick="loadProfile('Female', '71+', 'true'); return false;" style="color: #5cb3cc;">Elderly Nurse</a> |
+                            <a href="#" onclick="loadProfile('Male', '31-50', 'false'); return false;" style="color: #5cb3cc;">Middle-age</a>
+                        </p>
+                    </form>
+                </div>
+
+                <div id="results-section" class="results-container">
+                    <div class="results-header">
+                        <h2 class="results-title">🎬 Dorothy is Ready</h2>
+                        <p class="results-subtitle">AI-powered personalized guidance</p>
+                    </div>
+
+                    <div class="dorothy-video-container">
+                        <div class="video-player" id="video-player">
+                            <div class="video-placeholder" id="video-placeholder">
+                                <img id="avatar-preview" class="avatar-preview" src="" alt="Dorothy">
+                                <div class="dorothy-name" id="dorothy-name">Dorothy</div>
+                            </div>
+                            <div class="loading-state" id="loading-state" style="display: none;">
+                                <div class="loading-spinner"></div>
+                                <div class="loading-text">Dorothy is preparing your video...</div>
+                                <div class="loading-subtext">This may take 30-60 seconds</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="profile-display" class="profile-tags"></div>
+
+                    <div class="did-info">
+                        🎭 Powered by D-ID - Professional AI avatar technology
+                    </div>
+
+                    <div class="video-controls">
+                        <button id="generate-video" class="video-btn">🎬 Generate Dorothy Video</button>
+                        <button id="play-video" class="video-btn" style="display: none;">▶️ Play Video</button>
+                    </div>
+
+                    <div class="personalized-content">
+                        <h3>What Dorothy will say:</h3>
+                        <div id="personalized-text" class="personalized-text"></div>
+                    </div>
+
+                    <div id="error-display" class="error-message" style="display: none;"></div>
+
+                    <div class="action-buttons">
+                        <button class="btn-secondary" onclick="tryAgain()">🔄 Try Again</button>
+                        <button class="btn-primary" onclick="saveInstructions()">📋 Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // D-ID Configuration with your NEW API key
+        const DID_API_KEY = 'YWJhcmJhbmVsLnRhbnlhQGdtYWlsLmNvbQ:g-xK2SwTt9Zv2GitkWDSz';
+        const DID_API_URL = 'https://api.d-id.com/talks';
+
+        // Dorothy Personas - FULLY CORRECTED avatar mapping based on verified descriptions
+        const avatarMapping = {
+            // Female avatars by ethnicity and age (verified)
+            female: {
+                White: {
+                    young: ['Fanna_f', 'Emily_f', 'Emma_f', 'Aria_f'],
+                    middle: ['Amber_f', 'Jenna_f'],
+                    elderly: ['Sara_f']
+                },
+                Hispanic: {
+                    young: ['Fatha_f'],
+                    middle: ['Fatha_f'],
+                    elderly: ['Fatha_f']
+                },
+                Black: {
+                    young: ['Luna_f', 'Zivva_f'],
+                    middle: ['Luna_f', 'Zivva_f'],
+                    elderly: ['Luna_f']
+                },
+                Asian: {
+                    young: ['Magen_f', 'Noelle_f'],
+                    middle: ['Noelle_f'],
+                    elderly: ['Noelle_f']
+                },
+                Multiracial: {
+                    young: ['Noelle_f', 'Zivva_f'],
+                    middle: ['Noelle_f', 'Zivva_f'],
+                    elderly: ['Noelle_f']
+                },
+                default: {
+                    young: ['Emma_f', 'Fanna_f', 'Aria_f'],
+                    middle: ['Amber_f', 'Jenna_f'],
+                    elderly: ['Sara_f']
+                }
+            },
+            // Male avatars by ethnicity and age (verified)
+            male: {
+                White: {
+                    young: ['Gordon_m', 'William_m'],
+                    middle: ['Joaquin_m', 'Gordon_m'],
+                    elderly: ['Joaquin_m']
+                },
+                Hispanic: {
+                    young: ['Hassan_m'],
+                    middle: ['Hassan_m'],
+                    elderly: ['Hassan_m']
+                },
+                Black: {
+                    young: ['Bull_m', 'Eric_m'],
+                    middle: ['Bull_m', 'Eric_m'],
+                    elderly: ['Bull_m']
+                },
+                Asian: {
+                    young: ['Brandon_m', 'Billy_m', 'Ibrahim_m'],
+                    middle: ['Brandon_m', 'Ibrahim_m'],
+                    elderly: ['Ibrahim_m']
+                },
+                Multiracial: {
+                    young: ['Brandon_m'],
+                    middle: ['Brandon_m'],
+                    elderly: ['Brandon_m']
+                },
+                default: {
+                    young: ['William_m', 'Gordon_m'],
+                    middle: ['Joaquin_m', 'Gordon_m'],
+                    elderly: ['Joaquin_m']
+                }
+            }
+        };
+
+        // Helper function to select appropriate avatar with age consideration
+        function selectAvatar(gender, ethnicity, ageGroup, medicalEducation) {
+            // Normalize gender for avatar selection
+            const genderKey = (gender === 'Male') ? 'male' : 'female';
+            
+            // Get ethnicity-specific avatars or default
+            const ethnicityKey = ethnicity || 'default';
+            let ethnicityAvatars = avatarMapping[genderKey][ethnicityKey] || avatarMapping[genderKey]['default'];
+            
+            // Select based on age group
+            const ageAvatars = ethnicityAvatars[ageGroup] || ethnicityAvatars['young'];
+            
+            // Select specific avatar based on medical education
+            const avatarIndex = medicalEducation ? Math.min(1, ageAvatars.length - 1) : 0;
+            const avatarName = ageAvatars[avatarIndex];
+            
+            return `https://create-images-results.d-id.com/DefaultPresenters/${avatarName}/image.png`;
+        }
+
+        // Greeting templates that acknowledge gender and ethnicity
+        const greetingTemplates = {
+            young_no_med: "Hey there! I'm Dorothy, your recovery companion. I know this hip surgery wasn't in your plans, but we're going to get you back to your active life!",
+            young_med: "Hello! I'm Dorothy, your care navigator. As someone with medical training, you understand the importance of proper post-op protocols.",
+            middle_no_med: "Hi, I'm Dorothy, here to guide you through recovery. I know you have a lot on your plate, so let's make this as straightforward as possible.",
+            middle_med: "Hello! I'm Dorothy, your healthcare guide. With your medical background, you'll appreciate a systematic approach to recovery.",
+            elderly_no_med: "Hello, I'm Dorothy, and I'm here to help you through this recovery. You've been so brave, and I want to make sure you feel supported every step of the way.",
+            elderly_med: "Hello, I'm Dorothy. It's a privilege to assist someone with your years of medical expertise. Your professional knowledge will be an asset in your recovery."
+        };
+
+        const instructionsText = {
+            no_med: "First, do a quick body check - any dizziness or nausea? If you're feeling good, let's get moving. Have someone nearby to help you. Sit up in bed so your upper body is upright. Slowly swing your legs over the side and sit on the edge for a moment. Stand up with your helper's support.",
+            med: "Assess for any orthostatic symptoms or dizziness before proceeding. Ensure appropriate assistance is available. Position yourself upright with optimal alignment in the bed. Execute a controlled transfer to seated position at bedside. Perform assisted standing while monitoring your physiological responses."
+        };
+
+        const closingText = {
+            young: "You've got this! Each step you take now is getting you closer to your full recovery and back to all your activities.",
+            middle: "Taking care of yourself properly now means you'll be back to taking care of everyone else sooner.",
+            elderly_no_med: "Rest assured that you're in excellent hands, and take comfort knowing that each day will bring you closer to feeling like yourself again.",
+            elderly_med: "Your lifetime of helping others heal has prepared you well for your own recovery. You deserve the same excellent care you've always provided."
+        };
+
+        let currentPersona = null;
+        let currentVideoUrl = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('care-form');
+            if (form) {
+                form.addEventListener('submit', handleFormSubmit);
+            }
+        });
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const profileData = {
+                gender: formData.get('gender'),
+                age_range: formData.get('age_range'),
+                medical_education: formData.get('medical_education'),
+                ethnicity: formData.get('ethnicity') || ''
+            };
+
+            if (!profileData.gender || !profileData.age_range || !profileData.medical_education) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            const continueBtn = document.getElementById('continue-btn');
+            continueBtn.disabled = true;
+            continueBtn.textContent = 'Dorothy is preparing...';
+
+            setTimeout(() => {
+                processProfile(profileData);
+                continueBtn.disabled = false;
+                continueBtn.textContent = 'Meet Dorothy →';
+            }, 1000);
+        }
+
+        function processProfile(profileData) {
+            // Determine age group and medical key
+            const ageGroup = profileData.age_range === '18-30' ? 'young' : 
+                           profileData.age_range === '71+' ? 'elderly' : 'middle';
+            const medKey = profileData.medical_education === 'true' ? 'med' : 'no_med';
+            const personaKey = `${ageGroup}_${medKey}`;
+            
+            // Map ethnicity to avatar categories (some ethnicities share avatar pools)
+            let avatarEthnicity = profileData.ethnicity;
+            if (profileData.ethnicity === 'Pacific Islander' || profileData.ethnicity === 'Native American') {
+                avatarEthnicity = 'Hispanic'; // Map to Hispanic/Latino avatar pool
+            }
+            
+            // Select appropriate avatar based on all parameters
+            const avatarUrl = selectAvatar(profileData.gender, avatarEthnicity, ageGroup, profileData.medical_education === 'true');
+            
+            // Determine voice based on gender
+            let voiceId = 'en-US-JennyNeural'; // default female
+            if (profileData.gender === 'Male') {
+                voiceId = profileData.medical_education === 'true' ? 'en-US-GuyNeural' : 'en-US-DavisNeural';
+            } else if (profileData.medical_education === 'true') {
+                voiceId = 'en-US-AriaNeural';
+            } else if (ageGroup === 'elderly') {
+                voiceId = 'en-US-NancyNeural';
+            }
+            
+            // Build persona dynamically
+            const personaName = {
+                'young_no_med': 'Dorothy (Your Recovery Buddy)',
+                'young_med': 'Dr. Dorothy (Clinical Navigator)',
+                'middle_no_med': 'Dorothy (Care Coordinator)',
+                'middle_med': 'Dorothy (Professional Guide)',
+                'elderly_no_med': 'Dorothy (Your Caring Guide)',
+                'elderly_med': 'Dorothy (Honored Colleague)'
+            }[personaKey];
+            
+            // Get appropriate closing text
+            let closing;
+            if (ageGroup === 'elderly' && medKey === 'med') {
+                closing = closingText.elderly_med;
+            } else if (ageGroup === 'elderly') {
+                closing = closingText.elderly_no_med;
+            } else {
+                closing = closingText[ageGroup];
+            }
+            
+            currentPersona = {
+                name: personaName,
+                avatar_url: avatarUrl,
+                voice_id: voiceId,
+                greeting: greetingTemplates[personaKey],
+                instructions: instructionsText[medKey],
+                closing: closing
+            };
+            
+            // Clear any existing video and reset everything
+            const videoPlayer = document.getElementById('video-player');
+            const existingVideo = videoPlayer.querySelector('video');
+            if (existingVideo) {
+                existingVideo.pause();
+                existingVideo.src = '';
+                existingVideo.remove();
+            }
+            
+            // Reset video player to placeholder state
+            videoPlayer.innerHTML = `
+                <div class="video-placeholder" id="video-placeholder">
+                    <img id="avatar-preview" class="avatar-preview" src="${currentPersona.avatar_url}" alt="Dorothy" onload="this.style.display='block';" onerror="this.style.display='none';">
+                    <div class="dorothy-name" id="dorothy-name">${currentPersona.name}</div>
+                </div>
+                <div class="loading-state" id="loading-state" style="display: none;">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">Dorothy is preparing your video...</div>
+                    <div class="loading-subtext">This may take 30-60 seconds</div>
+                </div>
+            `;
+            
+            // Show results
+            document.getElementById('form-section').style.display = 'none';
+            document.getElementById('results-section').classList.add('show');
+            
+            // Show profile tags including ethnicity if provided
+            const profileDisplay = document.getElementById('profile-display');
+            const tags = [
+                profileData.gender,
+                profileData.age_range,
+                profileData.medical_education === 'true' ? 'Medical Background' : 'No Medical Background'
+            ];
+            if (profileData.ethnicity) {
+                const ethnicityLabel = {
+                    'White': 'White/Caucasian',
+                    'Hispanic': 'Hispanic/Latino',
+                    'Black': 'Black/African American',
+                    'Asian': 'Asian',
+                    'Pacific Islander': 'Pacific Islander',
+                    'Native American': 'Native American/Alaska Native',
+                    'Multiracial': 'Multiracial',
+                    'Other': 'Other'
+                }[profileData.ethnicity] || profileData.ethnicity;
+                tags.push(ethnicityLabel);
+            }
+            profileDisplay.innerHTML = tags.map(tag => 
+                `<span class="profile-tag">${tag}</span>`
+            ).join('');
+            
+            // Show text content
+            const textContent = `${currentPersona.greeting}\n\nGetting Out of Bed Safely:\n${currentPersona.instructions}\n\n${currentPersona.closing}`;
+            document.getElementById('personalized-text').innerHTML = textContent.replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
+            
+            // Reset button states
+            const generateBtn = document.getElementById('generate-video');
+            const playBtn = document.getElementById('play-video');
+            generateBtn.style.display = 'inline-block';
+            playBtn.style.display = 'none';
+            
+            // Hide any error messages
+            const errorDisplay = document.getElementById('error-display');
+            errorDisplay.style.display = 'none';
+            
+            // Clear previous video URL
+            currentVideoUrl = null;
+            
+            // Setup video generation
+            setupVideoGeneration();
+        }
+
+        function setupVideoGeneration() {
+            const generateBtn = document.getElementById('generate-video');
+            const playBtn = document.getElementById('play-video');
+            
+            generateBtn.style.display = 'inline-block';
+            playBtn.style.display = 'none';
+            
+            generateBtn.onclick = async () => {
+                await generateDorothyVideo();
+            };
+        }
+
+        async function generateDorothyVideo() {
+            const generateBtn = document.getElementById('generate-video');
+            const playBtn = document.getElementById('play-video');
+            const loadingState = document.getElementById('loading-state');
+            const videoPlaceholder = document.getElementById('video-placeholder');
+            const errorDisplay = document.getElementById('error-display');
+            
+            // Show loading state
+            generateBtn.style.display = 'none';
+            videoPlaceholder.style.display = 'none';
+            loadingState.style.display = 'flex';
+            errorDisplay.style.display = 'none';
+            
+            try {
+                console.log('Starting D-ID video generation...');
+                
+                // Create shorter, optimized speech text
+                const speechText = `${currentPersona.greeting} ${currentPersona.instructions} ${currentPersona.closing}`;
+                
+                console.log('Speech text length:', speechText.length);
+                console.log('Avatar URL:', currentPersona.avatar_url);
+                console.log('Voice ID:', currentPersona.voice_id);
+                
+                // Try a simpler request format first
+                const requestBody = {
+                    script: {
+                        type: 'text',
+                        input: speechText
+                    },
+                    source_url: currentPersona.avatar_url
+                };
+                
+                console.log('Simplified request body:', JSON.stringify(requestBody, null, 2));
+                
+                const response = await fetch(DID_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Basic ${DID_API_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                console.log('Response status:', response.status);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.log('Error response:', errorText);
+                    
+                    if (response.status === 500) {
+                        throw new Error('D-ID server error (500). Their servers are having internal issues. Please try again in a few minutes.');
+                    } else if (response.status === 402) {
+                        throw new Error('Credit limit reached. Please check your D-ID account billing.');
+                    } else if (response.status === 401) {
+                        throw new Error('Authentication failed. Please check your D-ID API key.');
+                    } else if (response.status === 400) {
+                        throw new Error('Bad request. There might be an issue with the avatar image or text length.');
+                    } else {
+                        throw new Error(`D-ID API error: ${response.status} - ${errorText}`);
+                    }
+                }
+
+                const talkData = await response.json();
+                console.log('Talk data:', talkData);
+                
+                const talkId = talkData.id;
+                console.log('Talk ID:', talkId);
+
+                // Poll for completion
+                await pollForVideoCompletion(talkId);
+
+            } catch (error) {
+                console.error('D-ID Error details:', error);
+                
+                // Show error with user-friendly message
+                loadingState.style.display = 'none';
+                videoPlaceholder.style.display = 'flex';
+                generateBtn.style.display = 'inline-block';
+                errorDisplay.style.display = 'block';
+                
+                let userMessage = error.message;
+                if (error.message.includes('500') || error.message.includes('server')) {
+                    userMessage = '🔧 D-ID servers are having internal issues (Error 500). This is temporary - please try again in 5-10 minutes. You can read Dorothy\'s message above in the meantime.';
+                } else if (error.message.includes('Failed to fetch') || error.message.includes('network')) {
+                    userMessage = '🌐 Network connection issue. Please check your internet and try again.';
+                }
+                
+                errorDisplay.innerHTML = `
+                    <div style="margin-bottom: 10px;">${userMessage}</div>
+                    <div style="font-size: 10px; color: #666;">
+                        Technical details: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function pollForVideoCompletion(talkId) {
+            const maxAttempts = 30; // 5 minutes max
+            let attempts = 0;
+            
+            const poll = async () => {
+                try {
+                    console.log(`Polling attempt ${attempts + 1}/${maxAttempts} for talk ID: ${talkId}`);
+                    
+                    const response = await fetch(`${DID_API_URL}/${talkId}`, {
+                        headers: {
+                            'Authorization': `Basic ${DID_API_KEY}`
+                        }
+                    });
+
+                    if (!response.ok) {
+                        console.error(`Poll response not ok: ${response.status}`);
+                        throw new Error(`Poll error: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    console.log('Poll response data:', data);
+                    
+                    if (data.status === 'done') {
+                        // Video is ready
+                        console.log('Video completed! URL:', data.result_url);
+                        currentVideoUrl = data.result_url;
+                        showCompletedVideo();
+                    } else if (data.status === 'error') {
+                        console.error('Video generation error:', data.error);
+                        throw new Error(`Video generation failed: ${data.error || 'Unknown error'}`);
+                    } else if (attempts < maxAttempts) {
+                        // Still processing, continue polling
+                        attempts++;
+                        console.log(`Still processing... Status: ${data.status}`);
+                        setTimeout(poll, 10000); // Poll every 10 seconds
+                    } else {
+                        console.error('Polling timed out');
+                        throw new Error('Video generation timed out - please try again');
+                    }
+                } catch (error) {
+                    console.error('Polling error:', error);
+                    
+                    // Show error state
+                    const loadingState = document.getElementById('loading-state');
+                    const videoPlaceholder = document.getElementById('video-placeholder');
+                    const generateBtn = document.getElementById('generate-video');
+                    const errorDisplay = document.getElementById('error-display');
+                    
+                    loadingState.style.display = 'none';
+                    videoPlaceholder.style.display = 'flex';
+                    generateBtn.style.display = 'inline-block';
+                    errorDisplay.style.display = 'block';
+                    errorDisplay.innerHTML = `
+                        <div style="margin-bottom: 10px;">⚠️ ${error.message}</div>
+                        <div style="font-size: 10px; color: #666;">
+                            You can read Dorothy's message above or try generating the video again.
+                        </div>
+                    `;
+                }
+            };
+            
+            poll();
+        }
+
+        function showCompletedVideo() {
+            const loadingState = document.getElementById('loading-state');
+            const videoPlayer = document.getElementById('video-player');
+            const generateBtn = document.getElementById('generate-video');
+            const playBtn = document.getElementById('play-video');
+            
+            console.log('Showing completed video:', currentVideoUrl);
+            
+            // Hide loading
+            loadingState.style.display = 'none';
+            
+            // Create video element
+            const video = document.createElement('video');
+            video.src = currentVideoUrl;
+            video.controls = true;
+            video.autoplay = true;
+            video.style.width = '100%';
+            video.style.height = '100%';
+            video.style.objectFit = 'cover';
+            video.style.borderRadius = '8px';
+            
+            // Add error handling for video
+            video.onerror = function() {
+                console.error('Video failed to load:', currentVideoUrl);
+                const errorDisplay = document.getElementById('error-display');
+                errorDisplay.style.display = 'block';
+                errorDisplay.innerHTML = `
+                    <div>⚠️ Video failed to load. Please try generating again.</div>
+                    <div style="font-size: 10px; color: #666; margin-top: 5px;">
+                        URL: ${currentVideoUrl}
+                    </div>
+                `;
+            };
+            
+            video.onloadstart = function() {
+                console.log('Video started loading');
+            };
+            
+            video.oncanplay = function() {
+                console.log('Video can start playing');
+            };
+            
+            // Clear and add video
+            videoPlayer.innerHTML = '';
+            videoPlayer.appendChild(video);
+            
+            // Update buttons
+            generateBtn.style.display = 'none';
+            playBtn.style.display = 'inline-block';
+            
+            playBtn.onclick = () => {
+                console.log('Play button clicked');
+                video.currentTime = 0;
+                video.play().catch(e => {
+                    console.error('Error playing video:', e);
+                });
+            };
+        }
+
+        function loadProfile(gender, age, medical) {
+            document.querySelector('[name="gender"]').value = gender;
+            document.querySelector('[name="age_range"]').value = age;
+            document.querySelector(`[name="medical_education"][value="${medical}"]`).checked = true;
+        }
+
+        function tryAgain() {
+            document.getElementById('care-form').reset();
+            document.getElementById('form-section').style.display = 'block';
+            document.getElementById('results-section').classList.remove('show');
+            currentVideoUrl = null;
+            currentPersona = null;
+        }
+
+        function saveInstructions() {
+            if (!currentPersona) return;
+            const content = `${currentPersona.greeting}\n\nGetting Out of Bed Safely:\n${currentPersona.instructions}\n\n${currentPersona.closing}`;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'dorothy-care-instructions.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
