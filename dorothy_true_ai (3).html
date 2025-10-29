@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ozz Health - Dorothy with Real AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .phone-container {
+            width: 375px;
+            max-height: 667px;
+            background: #2c3e50;
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .phone-screen {
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .demo-header {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .demo-header h1 {
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .ai-mode-badge {
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .ai-mode-badge.real-ai {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .ai-mode-badge.simulated {
+            background: #ffc107;
+            color: #000;
+        }
+
+        .content {
+            padding: 30px 25px;
+            max-height: 580px;
+            overflow-y: auto;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo h1 {
+            font-size: 32px;
+            font-weight: 300;
+            color: #2c3e50;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .logo p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .welcome-title {
+            color: #5cb3cc;
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .welcome-subtitle {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .api-config-box {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .api-config-box h3 {
+            font-size: 13px;
+            color: #856404;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .api-input-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .api-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        .api-btn {
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .api-btn:hover {
+            background: #5568d3;
+        }
+
+        .api-status {
+            font-size: 11px;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .status-indicator.active {
+            background: #28a745;
+            animation: pulse-green 2s infinite;
+        }
+
+        .status-indicator.inactive {
+            background: #dc3545;
+        }
+
+        @keyframes pulse-green {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            color: #2c3e50;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            background: white;
+            font-size: 14px;
+            color: #495057;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: #5cb3cc;
+            box-shadow: 0 0 0 3px rgba(92, 179, 204, 0.1);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 8px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .continue-btn {
+            width: 100%;
+            background: #5cb3cc;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px 0 15px 0;
+        }
+
+        .continue-btn:hover {
+            background: #4a9bb8;
+            transform: translateY(-1px);
+        }
+
+        .continue-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .privacy-notice {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 15px 0;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .privacy-text {
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        .help-text {
+            text-align: center;
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        /* AI Analysis Overlay */
+        .ai-analysis-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .ai-analysis-overlay.show {
+            display: flex;
+        }
+
+        .ai-analysis-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .ai-brain-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            font-size: 60px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .ai-analysis-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .ai-analysis-status {
+            font-size: 14px;
+            color: #5cb3cc;
+            margin-bottom: 25px;
+        }
+
+        .ai-analysis-steps {
+            text-align: left;
+            margin: 20px 0;
+        }
+
+        .ai-step {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            opacity: 0.3;
+            transition: all 0.3s ease;
+        }
+
+        .ai-step.active {
+            opacity: 1;
+            background: #e8f5e8;
+            border-left: 4px solid #28a745;
+            transform: translateX(4px);
+        }
+
+        .ai-step.completed {
+            opacity: 1;
+            background: #d4edda;
+        }
+
+        .ai-step-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            font-size: 18px;
+        }
+
+        .ai-step-text {
+            font-size: 13px;
+            color: #2c3e50;
+            flex: 1;
+        }
+
+        .ai-progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .ai-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #5cb3cc, #28a745);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* Results Section */
+        .results-container {
+            display: none;
+        }
+
+        .results-container.show {
+            display: block;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .results-title {
+            color: #2c3e50;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .results-subtitle {
+            color: #7f8c8d;
+            font-size: 12px;
+        }
+
+        .ai-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        /* Dorothy Video Player */
+        .dorothy-video-container {
+            text-align: center;
+            margin: 20px 0;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .video-player {
+            width: 100%;
+            max-width: 300px;
+            height: 200px;
+            border-radius: 8px;
+            background: #000;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-player video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+        }
+
+        .avatar-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            object-fit: cover;
+            border: 3px solid #5cb3cc;
+        }
+
+        .loading-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            color: #5cb3cc;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e3f2fd;
+            border-top: 4px solid #5cb3cc;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .loading-subtext {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+
+        .dorothy-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #2c3e50;
+            margin-top: 10px;
+        }
+
+        .profile-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .profile-tag {
+            background: #5cb3cc;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .video-controls {
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .video-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+        }
+
+        .video-btn:hover {
+            background: #218838;
+            transform: translateY(-1px);
+        }
+
+        .video-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .personalized-content {
+            background: #f8f9fa;
+            border-left: 4px solid #5cb3cc;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .personalized-content h3 {
+            color: #2c3e50;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .personalized-text {
+            color: #495057;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-secondary, .btn-primary {
+            flex: 1;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-primary {
+            background: #28a745;
+            color: white;
+        }
+
+        .did-info {
+            background: #e8f5e8;
+            border: 1px solid #28a745;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 11px;
+            color: #155724;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <!-- AI Analysis Overlay -->
+    <div class="ai-analysis-overlay" id="ai-analysis-overlay">
+        <div class="ai-analysis-container">
+            <div class="ai-brain-icon">🧠</div>
+            <div class="ai-analysis-title">Dorothy's AI is Thinking...</div>
+            <div class="ai-analysis-status" id="ai-status">Analyzing your profile</div>
+            
+            <div class="ai-analysis-steps">
+                <div class="ai-step" id="step-1">
+                    <div class="ai-step-icon">🔍</div>
+                    <div class="ai-step-text">Analyzing demographics and clinical data</div>
+                </div>
+                <div class="ai-step" id="step-2">
+                    <div class="ai-step-icon">🧠</div>
+                    <div class="ai-step-text">Assessing emotional and empathy needs</div>
+                </div>
+                <div class="ai-step" id="step-3">
+                    <div class="ai-step-icon">💬</div>
+                    <div class="ai-step-text">Generating personalized message with LLM</div>
+                </div>
+                <div class="ai-step" id="step-4">
+                    <div class="ai-step-icon">👤</div>
+                    <div class="ai-step-text">Selecting optimal avatar and voice</div>
+                </div>
+                <div class="ai-step" id="step-5">
+                    <div class="ai-step-icon">✨</div>
+                    <div class="ai-step-text">Finalizing empathetic communication</div>
+                </div>
+            </div>
+            
+            <div class="ai-progress-bar">
+                <div class="ai-progress-fill" id="ai-progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="phone-container">
+        <div class="phone-screen">
+            <div class="demo-header">
+                <h1>▷ Dorothy - True AI</h1>
+                <span class="ai-mode-badge" id="ai-mode-badge">⚙️ Setup</span>
+            </div>
+            
+            <div class="content">
+                <div id="form-section">
+                    <div class="logo">
+                        <h1>OZZ</h1>
+                        <p>health</p>
+                    </div>
+
+                    <div class="welcome-section">
+                        <h2 class="welcome-title">Meet Dorothy</h2>
+                        <p class="welcome-subtitle">Real AI-powered empathetic personalization</p>
+                    </div>
+
+                    <!-- API Configuration -->
+                    <div class="api-config-box">
+                        <h3>🔑 AI Configuration</h3>
+                        <div class="api-input-group">
+                            <input type="password" 
+                                   class="api-input" 
+                                   id="openai-api-key" 
+                                   placeholder="Enter OpenAI API Key (optional)"
+                                   value="">
+                            <button class="api-btn" onclick="saveAPIKey()">Save</button>
+                        </div>
+                        <div class="api-status">
+                            <span class="status-indicator" id="ai-status-indicator"></span>
+                            <span id="ai-mode-text">Using simulated AI (demo mode)</span>
+                        </div>
+                        <div style="font-size: 10px; color: #856404; margin-top: 8px;">
+                            Without API key: Uses smart templates. With API key: True GPT-4 generation.
+                        </div>
+                    </div>
+
+                    <form id="care-form">
+                        <div class="form-group">
+                            <label class="form-label">Gender</label>
+                            <select class="form-select" name="gender" required>
+                                <option value="">Select gender</option>
+                                <option value="Female">Female</option>
+                                <option value="Male">Male</option>
+                                <option value="Non-binary">Non-binary</option>
+                                <option value="Other">Other</option>
+                                <option value="Prefer not to say">Prefer not to say</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Age Range</label>
+                            <select class="form-select" name="age_range" required>
+                                <option value="">Select age range</option>
+                                <option value="18-30">18-30</option>
+                                <option value="31-50">31-50</option>
+                                <option value="51-70">51-70</option>
+                                <option value="71+">71+</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Medical Education?</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="medical_education" value="true" required>
+                                    <span>Yes</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="medical_education" value="false" required>
+                                    <span>No</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Race/Ethnicity (Optional)</label>
+                            <select class="form-select" name="ethnicity">
+                                <option value="">Prefer not to say</option>
+                                <option value="White">White/Caucasian</option>
+                                <option value="Hispanic">Hispanic/Latino</option>
+                                <option value="Black">Black/African American</option>
+                                <option value="Asian">Asian</option>
+                                <option value="Pacific Islander">Pacific Islander</option>
+                                <option value="Native American">Native American/Alaska Native</option>
+                                <option value="Multiracial">Multiracial</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="privacy-notice">
+                            <span>🔒</span>
+                            <span class="privacy-text">Your information is protected</span>
+                        </div>
+
+                        <button type="submit" class="continue-btn" id="continue-btn">
+                            Meet Dorothy →
+                        </button>
+
+                        <p class="help-text">
+                            Quick test: 
+                            <a href="#" onclick="loadProfile('Female', '18-30', 'false'); return false;" style="color: #5cb3cc;">Young</a> |
+                            <a href="#" onclick="loadProfile('Female', '71+', 'true'); return false;" style="color: #5cb3cc;">Elderly Nurse</a> |
+                            <a href="#" onclick="loadProfile('Male', '31-50', 'false'); return false;" style="color: #5cb3cc;">Middle-age</a>
+                        </p>
+                    </form>
+                </div>
+
+                <div id="results-section" class="results-container">
+                    <div class="results-header">
+                        <h2 class="results-title">🎬 Dorothy is Ready</h2>
+                        <p class="results-subtitle">AI-powered empathetic guidance</p>
+                        <span class="ai-badge" id="results-ai-badge">🤖 AI-Personalized</span>
+                    </div>
+
+                    <div class="dorothy-video-container">
+                        <div class="video-player" id="video-player">
+                            <div class="video-placeholder" id="video-placeholder">
+                                <img id="avatar-preview" class="avatar-preview" src="" alt="Dorothy">
+                                <div class="dorothy-name" id="dorothy-name">Dorothy</div>
+                            </div>
+                            <div class="loading-state" id="loading-state" style="display: none;">
+                                <div class="loading-spinner"></div>
+                                <div class="loading-text">Dorothy is preparing your video...</div>
+                                <div class="loading-subtext">This may take 30-60 seconds</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="profile-display" class="profile-tags"></div>
+
+                    <div class="did-info">
+                        🎭 Powered by D-ID + <span id="ai-engine-display">Simulated AI</span>
+                    </div>
+
+                    <div class="video-controls">
+                        <button id="generate-video" class="video-btn">🎬 Generate Dorothy Video</button>
+                        <button id="play-video" class="video-btn" style="display: none;">▶️ Play Video</button>
+                    </div>
+
+                    <div class="personalized-content">
+                        <h3>What Dorothy will say:</h3>
+                        <div id="personalized-text" class="personalized-text"></div>
+                    </div>
+
+                    <div id="error-display" class="error-message" style="display: none;"></div>
+
+                    <div class="action-buttons">
+                        <button class="btn-secondary" onclick="tryAgain()">🔄 Try Again</button>
+                        <button class="btn-primary" onclick="saveInstructions()">📋 Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const DID_API_KEY = 'YWJhcmJhbmVsLnRhbnlhQGdtYWlsLmNvbQ:g-xK2SwTt9Zv2GitkWDSz';
+        const DID_API_URL = 'https://api.d-id.com/talks';
+        
+        let OPENAI_API_KEY = localStorage.getItem('openai_api_key') || '';
+        let USE_REAL_AI = !!OPENAI_API_KEY;
+
+        // Avatar mapping (same as before)
+        const avatarMapping = {
+            female: {
+                White: { young: ['Fanna_f', 'Emily_f'], middle: ['Amber_f', 'Jenna_f'], elderly: ['Sara_f'] },
+                Hispanic: { young: ['Fatha_f'], middle: ['Fatha_f'], elderly: ['Fatha_f'] },
+                Black: { young: ['Luna_f', 'Zivva_f'], middle: ['Luna_f'], elderly: ['Luna_f'] },
+                Asian: { young: ['Magen_f', 'Noelle_f'], middle: ['Noelle_f'], elderly: ['Noelle_f'] },
+                default: { young: ['Emma_f'], middle: ['Amber_f'], elderly: ['Sara_f'] }
+            },
+            male: {
+                White: { young: ['Gordon_m', 'William_m'], middle: ['Joaquin_m'], elderly: ['Joaquin_m'] },
+                Hispanic: { young: ['Hassan_m'], middle: ['Hassan_m'], elderly: ['Hassan_m'] },
+                Black: { young: ['Bull_m', 'Eric_m'], middle: ['Bull_m'], elderly: ['Bull_m'] },
+                Asian: { young: ['Brandon_m', 'Ibrahim_m'], middle: ['Ibrahim_m'], elderly: ['Ibrahim_m'] },
+                default: { young: ['William_m'], middle: ['Joaquin_m'], elderly: ['Joaquin_m'] }
+            }
+        };
+
+        function selectAvatar(gender, ethnicity, ageGroup, medicalEducation) {
+            const genderKey = (gender === 'Male') ? 'male' : 'female';
+            const ethnicityKey = ethnicity || 'default';
+            let ethnicityAvatars = avatarMapping[genderKey][ethnicityKey] || avatarMapping[genderKey]['default'];
+            const ageAvatars = ethnicityAvatars[ageGroup] || ethnicityAvatars['young'];
+            const avatarIndex = medicalEducation ? Math.min(1, ageAvatars.length - 1) : 0;
+            const avatarName = ageAvatars[avatarIndex];
+            return `https://create-images-results.d-id.com/DefaultPresenters/${avatarName}/image.png`;
+        }
+
+        // Fallback templates for simulated mode
+        const fallbackTemplates = {
+            young_no_med: {
+                greeting: "Hey there! I'm Dorothy, your recovery companion. I know this hip surgery wasn't in your plans, but I'm here to support you emotionally and physically through this journey.",
+                instructions: "First, let's check how you're feeling - any dizziness or nausea? It's okay to take your time. Have someone nearby to help. Sit up gently in bed, taking a moment to adjust. Slowly swing your legs over and sit on the edge. When ready, stand up with support.",
+                closing: "You've got this! Each step brings you closer to full recovery. Be patient and kind with yourself."
+            },
+            young_med: {
+                greeting: "Hello! I'm Dorothy, your care navigator. As someone with medical training, you understand the clinical aspects, but I want to ensure you're caring for your emotional wellbeing too.",
+                instructions: "Assess for orthostatic symptoms before proceeding. Ensure appropriate assistance is available. Position yourself upright with optimal alignment. Execute a controlled transfer to seated position. Perform assisted standing while monitoring responses.",
+                closing: "Your professional knowledge combined with self-compassion will guide your recovery beautifully."
+            },
+            middle_no_med: {
+                greeting: "Hi, I'm Dorothy, here to guide you with empathy. I know you have a lot on your plate, so let's take this one step at a time together.",
+                instructions: "Check how you're feeling first. Have someone trustworthy nearby to help. Sit up gently, swing your legs over slowly, sit on the edge to catch your breath, then stand with support when ready. No rush - your comfort comes first.",
+                closing: "Be as caring with yourself as you are with others. You're doing great."
+            },
+            middle_med: {
+                greeting: "Hello! I'm Dorothy. With your medical background, you'll appreciate both clinical precision and emotional support I'm here to provide.",
+                instructions: "Assess for orthostatic symptoms before proceeding, being mindful of how your body feels. Ensure appropriate assistance from someone you trust. Position upright with optimal alignment. Execute controlled transfer to seated position. Perform assisted standing while monitoring physiological and emotional responses.",
+                closing: "Your professional knowledge combined with self-compassion will guide your recovery."
+            },
+            elderly_no_med: {
+                greeting: "Hello, I'm Dorothy, here to be your compassionate companion through recovery. You've been so brave, and I want to make sure you feel truly cared for every step of the way.",
+                instructions: "Let's check how you're feeling - any dizziness? Take all the time you need. Have someone who cares about you nearby. Sit up very gently, swing your legs over slowly, sit on the edge to rest, then stand with support when you're ready. There's no rush at all.",
+                closing: "Rest assured you're in excellent hands. Each day brings you closer to feeling like yourself again."
+            },
+            elderly_med: {
+                greeting: "Hello, I'm Dorothy. It's an honor to assist someone with your years of medical expertise. I'm here to provide clinical guidance and the empathy you deserve during recovery.",
+                instructions: "Assess for orthostatic symptoms before proceeding, being mindful of your body's signals. Ensure assistance from someone you trust. Position upright with optimal alignment. Execute controlled transfer to seated position, listening to your body. Perform assisted standing while monitoring responses.",
+                closing: "Your lifetime of helping others heal has prepared you well. You deserve the excellent care you've always provided."
+            }
+        };
+
+        let currentPersona = null;
+        let currentVideoUrl = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateAIStatus();
+            const form = document.getElementById('care-form');
+            if (form) {
+                form.addEventListener('submit', handleFormSubmit);
+            }
+            
+            // Load saved API key if exists
+            if (OPENAI_API_KEY) {
+                document.getElementById('openai-api-key').value = OPENAI_API_KEY;
+            }
+        });
+
+        function saveAPIKey() {
+            const apiKey = document.getElementById('openai-api-key').value.trim();
+            if (apiKey) {
+                OPENAI_API_KEY = apiKey;
+                USE_REAL_AI = true;
+                localStorage.setItem('openai_api_key', apiKey);
+                alert('✅ API key saved! Dorothy will now use real GPT-4 generation.');
+            } else {
+                OPENAI_API_KEY = '';
+                USE_REAL_AI = false;
+                localStorage.removeItem('openai_api_key');
+                alert('API key cleared. Using simulated AI mode.');
+            }
+            updateAIStatus();
+        }
+
+        function updateAIStatus() {
+            const statusIndicator = document.getElementById('ai-status-indicator');
+            const modeText = document.getElementById('ai-mode-text');
+            const modeBadge = document.getElementById('ai-mode-badge');
+            
+            if (USE_REAL_AI) {
+                statusIndicator.className = 'status-indicator active';
+                modeText.textContent = 'Real AI Active (GPT-4)';
+                modeBadge.textContent = '🤖 Real AI';
+                modeBadge.className = 'ai-mode-badge real-ai';
+            } else {
+                statusIndicator.className = 'status-indicator inactive';
+                modeText.textContent = 'Using simulated AI (demo mode)';
+                modeBadge.textContent = '⚙️ Demo Mode';
+                modeBadge.className = 'ai-mode-badge simulated';
+            }
+        }
+
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const profileData = {
+                gender: formData.get('gender'),
+                age_range: formData.get('age_range'),
+                medical_education: formData.get('medical_education'),
+                ethnicity: formData.get('ethnicity') || ''
+            };
+
+            if (!profileData.gender || !profileData.age_range || !profileData.medical_education) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            await showAIAnalysis(profileData);
+        }
+
+        async function showAIAnalysis(profileData) {
+            const overlay = document.getElementById('ai-analysis-overlay');
+            const statusText = document.getElementById('ai-status');
+            const progressFill = document.getElementById('ai-progress-fill');
+            
+            overlay.classList.add('show');
+            
+            const steps = [
+                { id: 'step-1', duration: 1000, status: 'Analyzing demographics and cultural background...' },
+                { id: 'step-2', duration: 1200, status: 'Evaluating emotional state and empathy requirements...' },
+                { id: 'step-3', duration: USE_REAL_AI ? 3000 : 1200, status: USE_REAL_AI ? 'Generating message with GPT-4...' : 'Creating personalized message...' },
+                { id: 'step-4', duration: 800, status: 'Matching optimal avatar and voice tone...' },
+                { id: 'step-5', duration: 600, status: 'Finalizing empathetic communication...' }
+            ];
+            
+            let completedSteps = 0;
+            const totalSteps = steps.length;
+            
+            // Start processing in parallel with animation
+            const profilePromise = processProfile(profileData);
+            
+            for (const step of steps) {
+                statusText.textContent = step.status;
+                const stepElement = document.getElementById(step.id);
+                stepElement.classList.add('active');
+                
+                completedSteps++;
+                const progress = (completedSteps / totalSteps) * 100;
+                progressFill.style.width = progress + '%';
+                
+                await new Promise(resolve => setTimeout(resolve, step.duration));
+                
+                stepElement.classList.remove('active');
+                stepElement.classList.add('completed');
+            }
+            
+            // Wait for actual processing to complete
+            await profilePromise;
+            
+            statusText.textContent = 'Personalization complete! 🎉';
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            overlay.classList.remove('show');
+            
+            setTimeout(() => {
+                document.querySelectorAll('.ai-step').forEach(step => {
+                    step.classList.remove('active', 'completed');
+                });
+                progressFill.style.width = '0%';
+                statusText.textContent = 'Analyzing your profile';
+            }, 500);
+            
+            showResults();
+        }
+
+        async function processProfile(profileData) {
+            const ageGroup = profileData.age_range === '18-30' ? 'young' : 
+                           profileData.age_range === '71+' ? 'elderly' : 'middle';
+            const medKey = profileData.medical_education === 'true' ? 'med' : 'no_med';
+            const personaKey = `${ageGroup}_${medKey}`;
+            
+            let avatarEthnicity = profileData.ethnicity;
+            if (profileData.ethnicity === 'Pacific Islander' || profileData.ethnicity === 'Native American') {
+                avatarEthnicity = 'Hispanic';
+            }
+            
+            const avatarUrl = selectAvatar(profileData.gender, avatarEthnicity, ageGroup, profileData.medical_education === 'true');
+            
+            // Select voice
+            let voiceId;
+            if (profileData.gender === 'Male') {
+                if (profileData.medical_education === 'true') {
+                    voiceId = 'en-US-GuyNeural';
+                } else if (ageGroup === 'elderly') {
+                    voiceId = 'en-US-DavisNeural';
+                } else {
+                    voiceId = 'en-US-DavisNeural';
+                }
+            } else {
+                if (profileData.medical_education === 'true') {
+                    voiceId = 'en-US-AriaNeural';
+                } else if (ageGroup === 'elderly') {
+                    voiceId = 'en-US-NancyNeural';
+                } else {
+                    voiceId = 'en-US-JennyNeural';
+                }
+            }
+            
+            const personaName = {
+                'young_no_med': 'Dorothy (Your Recovery Buddy)',
+                'young_med': 'Dr. Dorothy (Clinical Navigator)',
+                'middle_no_med': 'Dorothy (Care Coordinator)',
+                'middle_med': 'Dorothy (Professional Guide)',
+                'elderly_no_med': 'Dorothy (Your Caring Guide)',
+                'elderly_med': 'Dorothy (Honored Colleague)'
+            }[personaKey];
+            
+            // Generate message content
+            let messageContent;
+            if (USE_REAL_AI) {
+                try {
+                    messageContent = await generateMessageWithAI(profileData, ageGroup, medKey);
+                } catch (error) {
+                    console.error('❌ AI generation failed, falling back to templates:', error);
+                    console.log('📝 Using fallback templates instead');
+                    messageContent = fallbackTemplates[personaKey];
+                }
+            } else {
+                console.log('📝 Using simulated AI mode (templates)');
+                messageContent = fallbackTemplates[personaKey];
+            }
+            
+            currentPersona = {
+                name: personaName,
+                avatar_url: avatarUrl,
+                voice_id: voiceId,
+                greeting: messageContent.greeting,
+                instructions: messageContent.instructions,
+                closing: messageContent.closing,
+                profileData: profileData
+            };
+        }
+
+        async function generateMessageWithAI(profileData, ageGroup, medKey) {
+            console.log('🤖 ATTEMPTING TO GENERATE WITH REAL AI...');
+            console.log('API Key present:', !!OPENAI_API_KEY);
+            
+            const systemPrompt = `You are Dorothy, an empathetic AI healthcare companion helping post-surgery patients with hip replacement recovery. Your role is to provide personalized, compassionate guidance.
+
+Key principles:
+- Be warm, empathetic, and emotionally intelligent
+- Adjust tone based on patient's age, medical knowledge, and background
+- Emphasize emotional support alongside clinical guidance
+- Be encouraging and reassuring
+- Use appropriate terminology for their health literacy level
+
+Generate exactly 3 sections:
+1. GREETING: A warm, personalized introduction (2-3 sentences)
+2. INSTRUCTIONS: Step-by-step guidance for getting out of bed safely (3-4 sentences)
+3. CLOSING: Encouraging final words (1-2 sentences)
+
+Format your response as JSON:
+{
+  "greeting": "...",
+  "instructions": "...",
+  "closing": "..."
+}`;
+
+            const userPrompt = `Patient Profile:
+- Gender: ${profileData.gender}
+- Age: ${profileData.age_range}
+- Medical Education: ${profileData.medical_education === 'true' ? 'Yes (healthcare professional)' : 'No'}
+- Ethnicity: ${profileData.ethnicity || 'Not specified'}
+- Age Group: ${ageGroup}
+- Context: Post-operative hip replacement patient, first day getting out of bed
+
+Generate a personalized, empathetic message for this specific patient.`;
+
+            // Try GPT-4 first, then fall back to GPT-3.5-turbo
+            const modelsToTry = ['gpt-4', 'gpt-3.5-turbo'];
+            
+            for (const model of modelsToTry) {
+                try {
+                    console.log(`Trying model: ${model}...`);
+                    
+                    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${OPENAI_API_KEY}`
+                        },
+                        body: JSON.stringify({
+                            model: model,
+                            messages: [
+                                { role: 'system', content: systemPrompt },
+                                { role: 'user', content: userPrompt }
+                            ],
+                            temperature: 0.8,
+                            max_tokens: 500
+                        })
+                    });
+
+                    console.log(`${model} Response Status:`, response.status);
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        console.warn(`❌ ${model} failed:`, errorData.error?.message);
+                        
+                        // If this is not the last model, try the next one
+                        if (model !== modelsToTry[modelsToTry.length - 1]) {
+                            console.log(`Falling back to next model...`);
+                            continue;
+                        }
+                        
+                        // If this was the last model, throw error
+                        throw new Error(`All models failed. Last error: ${errorData.error?.message || 'Unknown error'}`);
+                    }
+
+                    const data = await response.json();
+                    console.log(`✅ SUCCESS with ${model.toUpperCase()}!`);
+                    
+                    const aiResponse = data.choices[0].message.content;
+                    console.log('AI Generated Content:', aiResponse);
+                    
+                    // Parse JSON response
+                    const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
+                    if (jsonMatch) {
+                        const parsed = JSON.parse(jsonMatch[0]);
+                        console.log('✅ SUCCESSFULLY PARSED AI RESPONSE:', parsed);
+                        console.log(`✨ Using ${model === 'gpt-4' ? 'GPT-4' : 'GPT-3.5-turbo'} for generation`);
+                        
+                        return {
+                            greeting: parsed.greeting,
+                            instructions: parsed.instructions,
+                            closing: parsed.closing
+                        };
+                    } else {
+                        console.error('Could not find JSON in response');
+                        throw new Error('Could not parse AI response');
+                    }
+                    
+                } catch (error) {
+                    // If this is a network error or parsing error (not model access), don't try other models
+                    if (error.message.includes('parse') || error.message.includes('fetch')) {
+                        console.error('❌ CRITICAL ERROR:', error.message);
+                        throw error;
+                    }
+                    
+                    // If this is the last model, throw the error
+                    if (model === modelsToTry[modelsToTry.length - 1]) {
+                        console.error('❌ ALL MODELS FAILED:', error.message);
+                        throw error;
+                    }
+                    
+                    // Otherwise, try the next model
+                    console.log(`Trying next model due to error: ${error.message}`);
+                }
+            }
+        }
+
+        function showResults() {
+            const videoPlayer = document.getElementById('video-player');
+            const existingVideo = videoPlayer.querySelector('video');
+            if (existingVideo) {
+                existingVideo.pause();
+                existingVideo.src = '';
+                existingVideo.remove();
+            }
+            
+            videoPlayer.innerHTML = `
+                <div class="video-placeholder" id="video-placeholder">
+                    <img id="avatar-preview" class="avatar-preview" src="${currentPersona.avatar_url}" alt="Dorothy" onload="this.style.display='block';" onerror="this.style.display='none';">
+                    <div class="dorothy-name" id="dorothy-name">${currentPersona.name}</div>
+                </div>
+                <div class="loading-state" id="loading-state" style="display: none;">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">Dorothy is preparing your video...</div>
+                    <div class="loading-subtext">This may take 30-60 seconds</div>
+                </div>
+            `;
+            
+            document.getElementById('form-section').style.display = 'none';
+            document.getElementById('results-section').classList.add('show');
+            
+            // Update AI badge
+            const resultsBadge = document.getElementById('results-ai-badge');
+            const aiEngineDisplay = document.getElementById('ai-engine-display');
+            if (USE_REAL_AI) {
+                resultsBadge.textContent = '🤖 Real GPT-4 Generated';
+                aiEngineDisplay.textContent = 'Real GPT-4';
+            } else {
+                resultsBadge.textContent = '🤖 Simulated AI';
+                aiEngineDisplay.textContent = 'Simulated AI';
+            }
+            
+            const profileDisplay = document.getElementById('profile-display');
+            const tags = [
+                currentPersona.profileData.gender,
+                currentPersona.profileData.age_range,
+                currentPersona.profileData.medical_education === 'true' ? 'Medical Background' : 'No Medical Background'
+            ];
+            if (currentPersona.profileData.ethnicity) {
+                tags.push(currentPersona.profileData.ethnicity);
+            }
+            profileDisplay.innerHTML = tags.map(tag => 
+                `<span class="profile-tag">${tag}</span>`
+            ).join('');
+            
+            const textContent = `${currentPersona.greeting}\n\nGetting Out of Bed Safely:\n${currentPersona.instructions}\n\n${currentPersona.closing}`;
+            document.getElementById('personalized-text').innerHTML = textContent.replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
+            
+            const generateBtn = document.getElementById('generate-video');
+            const playBtn = document.getElementById('play-video');
+            generateBtn.style.display = 'inline-block';
+            playBtn.style.display = 'none';
+            
+            const errorDisplay = document.getElementById('error-display');
+            errorDisplay.style.display = 'none';
+            
+            currentVideoUrl = null;
+            
+            setupVideoGeneration();
+        }
+
+        function setupVideoGeneration() {
+            const generateBtn = document.getElementById('generate-video');
+            generateBtn.onclick = async () => {
+                await generateDorothyVideo();
+            };
+        }
+
+        async function generateDorothyVideo() {
+            const generateBtn = document.getElementById('generate-video');
+            const playBtn = document.getElementById('play-video');
+            const loadingState = document.getElementById('loading-state');
+            const videoPlaceholder = document.getElementById('video-placeholder');
+            const errorDisplay = document.getElementById('error-display');
+            
+            generateBtn.style.display = 'none';
+            videoPlaceholder.style.display = 'none';
+            loadingState.style.display = 'flex';
+            errorDisplay.style.display = 'none';
+            
+            try {
+                console.log('Starting D-ID video generation...');
+                
+                const speechText = `${currentPersona.greeting} ${currentPersona.instructions} ${currentPersona.closing}`;
+                
+                const requestBody = {
+                    script: {
+                        type: 'text',
+                        input: speechText,
+                        provider: {
+                            type: 'microsoft',
+                            voice_id: currentPersona.voice_id
+                        }
+                    },
+                    source_url: currentPersona.avatar_url
+                };
+                
+                console.log('Request:', JSON.stringify(requestBody, null, 2));
+                
+                const response = await fetch(DID_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Basic ${DID_API_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('D-ID Error:', errorText);
+                    throw new Error(`D-ID API error: ${response.status}`);
+                }
+
+                const talkData = await response.json();
+                console.log('Talk created:', talkData.id);
+                
+                await pollForVideoCompletion(talkData.id);
+
+            } catch (error) {
+                console.error('Video generation error:', error);
+                
+                loadingState.style.display = 'none';
+                videoPlaceholder.style.display = 'flex';
+                generateBtn.style.display = 'inline-block';
+                errorDisplay.style.display = 'block';
+                errorDisplay.innerHTML = `
+                    <div>⚠️ ${error.message}</div>
+                    <div style="font-size: 10px; margin-top: 5px;">You can read Dorothy's message above.</div>
+                `;
+            }
+        }
+
+        async function pollForVideoCompletion(talkId) {
+            const maxAttempts = 30;
+            let attempts = 0;
+            
+            const poll = async () => {
+                try {
+                    const response = await fetch(`${DID_API_URL}/${talkId}`, {
+                        headers: { 'Authorization': `Basic ${DID_API_KEY}` }
+                    });
+
+                    if (!response.ok) throw new Error(`Poll error: ${response.status}`);
+
+                    const data = await response.json();
+                    
+                    if (data.status === 'done') {
+                        currentVideoUrl = data.result_url;
+                        showCompletedVideo();
+                    } else if (data.status === 'error') {
+                        throw new Error(`Video generation failed: ${data.error}`);
+                    } else if (attempts < maxAttempts) {
+                        attempts++;
+                        setTimeout(poll, 10000);
+                    } else {
+                        throw new Error('Video generation timed out');
+                    }
+                } catch (error) {
+                    console.error('Polling error:', error);
+                    const loadingState = document.getElementById('loading-state');
+                    const videoPlaceholder = document.getElementById('video-placeholder');
+                    const generateBtn = document.getElementById('generate-video');
+                    const errorDisplay = document.getElementById('error-display');
+                    
+                    loadingState.style.display = 'none';
+                    videoPlaceholder.style.display = 'flex';
+                    generateBtn.style.display = 'inline-block';
+                    errorDisplay.style.display = 'block';
+                    errorDisplay.innerHTML = `<div>⚠️ ${error.message}</div>`;
+                }
+            };
+            
+            poll();
+        }
+
+        function showCompletedVideo() {
+            const loadingState = document.getElementById('loading-state');
+            const videoPlayer = document.getElementById('video-player');
+            const generateBtn = document.getElementById('generate-video');
+            const playBtn = document.getElementById('play-video');
+            
+            loadingState.style.display = 'none';
+            
+            const video = document.createElement('video');
+            video.src = currentVideoUrl;
+            video.controls = true;
+            video.autoplay = true;
+            video.style.width = '100%';
+            video.style.height = '100%';
+            video.style.objectFit = 'cover';
+            video.style.borderRadius = '8px';
+            
+            videoPlayer.innerHTML = '';
+            videoPlayer.appendChild(video);
+            
+            generateBtn.style.display = 'none';
+            playBtn.style.display = 'inline-block';
+            
+            playBtn.onclick = () => {
+                video.currentTime = 0;
+                video.play();
+            };
+        }
+
+        function loadProfile(gender, age, medical) {
+            document.querySelector('[name="gender"]').value = gender;
+            document.querySelector('[name="age_range"]').value = age;
+            document.querySelector(`[name="medical_education"][value="${medical}"]`).checked = true;
+        }
+
+        function tryAgain() {
+            document.getElementById('care-form').reset();
+            document.getElementById('form-section').style.display = 'block';
+            document.getElementById('results-section').classList.remove('show');
+            currentVideoUrl = null;
+            currentPersona = null;
+        }
+
+        function saveInstructions() {
+            if (!currentPersona) return;
+            const content = `${currentPersona.greeting}\n\nGetting Out of Bed Safely:\n${currentPersona.instructions}\n\n${currentPersona.closing}`;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'dorothy-ai-care-instructions.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
